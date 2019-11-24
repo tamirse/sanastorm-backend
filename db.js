@@ -11,7 +11,7 @@ const pool = new Pool({
 
 const getNounInflections = word => {
   let query = `select * from nouns 
-  where '${word}' in (nominative,genitive,partitive,
+  where $1::text in (nominative,genitive,partitive,
   inessive,elative,illative,adessive,ablative,allative,
   essive,translative,abessive,comitative,
   pl_nominative,pl_genitive,pl_partitive,pl_inessive,
@@ -21,7 +21,7 @@ const getNounInflections = word => {
 
   return new Promise((resolve, reject) => {
     pool
-      .query(query)
+      .query(query, [word])
       .then(result => resolve(result.rows[0]))
       .catch(e => reject(e));
   });
@@ -29,11 +29,11 @@ const getNounInflections = word => {
 
 const getNounEnglish = word => {
   let query = `select noun_nominative, english from nouns_translations 
-  where noun_nominative = '${word}'`;
+  where noun_nominative = $1::text`;
 
   return new Promise((resolve, reject) => {
     pool
-      .query(query)
+      .query(query, [word])
       .then(result => resolve(result.rows[0]))
       .catch(e => reject(e));
   });
@@ -72,7 +72,7 @@ const getVerbInflections = word => {
   past_1sg as past,
   cond_1sg as conditional,
   agnt_part as gerund from verbs 
-  where '${word}' in (
+  where $1::text in (
     pres_1sg, pres_2sg, pres_3sg,
     pres_1pl, pres_2pl, pres_3pl,
     pres_neg, pres_pass, pres_pass_neg,
@@ -100,7 +100,7 @@ const getVerbInflections = word => {
 
   return new Promise((resolve, reject) => {
     pool
-      .query(query)
+      .query(query, [word])
       .then(result => resolve(result.rows[0]))
       .catch(e => reject(e));
   });
@@ -108,11 +108,11 @@ const getVerbInflections = word => {
 
 const getVerbEnglish = word => {
   let query = `select verb_infinitive, english from verbs_translations 
-  where verb_infinitive = '${word}'`;
+  where verb_infinitive = $1::text`;
 
   return new Promise((resolve, reject) => {
     pool
-      .query(query)
+      .query(query, [word])
       .then(result => resolve(result.rows[0]))
       .catch(e => reject(e));
   });
