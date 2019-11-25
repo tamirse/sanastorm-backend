@@ -10,10 +10,16 @@ const pool = new Pool({
 });
 
 const getNounInflections = word => {
-  let query = `select * from nouns 
+  let query = `select nominative,genitive,partitive,
+  inessive,elative,illative,adessive,ablative,allative,
+  essive,translative,abessive,comitative from nouns 
   where $1::text in (nominative,genitive,partitive,
   inessive,elative,illative,adessive,ablative,allative,
-  essive,translative,abessive,comitative)`;
+  essive,translative,abessive,comitative,
+  pl_nominative,pl_genitive,pl_partitive,pl_inessive,
+  pl_elative,pl_illative,pl_adessive,pl_ablative,
+  pl_allative,pl_essive,pl_translative,pl_instructive,
+  pl_abessive)`;
 
   return new Promise((resolve, reject) => {
     pool
