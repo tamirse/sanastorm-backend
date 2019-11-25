@@ -150,12 +150,26 @@ const getWordData = word => {
     const nounPromise = getNounData(word);
     const verbPromise = getVerbData(word);
 
+    const nounPromiseLower = getNounData(word.toLowerCase());
+    const verbPromiseLower = getVerbData(word.toLowerCase());
+
     Promise.all([nounPromise, verbPromise])
       .then(([nounData, verbData]) => {
         if (nounData) {
           resolve(nounData);
-        } else {
+        } else if (verbData) {
           resolve(verbData);
+        } else {
+          // try again with lower case
+          Promise.all([nounPromiseLower, verbPromiseLower]).then(
+            ([nounData, verbData]) => {
+              if (nounData) {
+                resolve(nounData);
+              } else {
+                resolve(verbData);
+              }
+            }
+          );
         }
       })
       .catch(e => reject(e));
