@@ -67,13 +67,7 @@ const getNounData = word => {
 };
 
 const getVerbInflections = word => {
-  let query = `select inf1 as infinitive,
-  pres_pass as passive,
-  impr_2sg as imperative,
-  pres_1sg as present,
-  past_1sg as past,
-  cond_1sg as conditional,
-  agnt_part as gerund from verbs 
+  let query = `select * from verbs 
   where $1::text in (
     pres_1sg, pres_2sg, pres_3sg,
     pres_1pl, pres_2pl, pres_3pl,
