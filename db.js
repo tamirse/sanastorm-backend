@@ -126,7 +126,7 @@ const getVerbData = word => {
       .then(inflections => {
         if (inflections) {
           wordData.inflections = inflections;
-          return getVerbEnglish(inflections.infinitive);
+          return getVerbEnglish(inflections.inf1);
         } else {
           resolve(null);
         }
