@@ -30,7 +30,7 @@ const getNounInflections = word => {
 };
 
 const getNounEnglish = word => {
-  let query = `select noun_nominative, english from nouns_translations 
+  let query = `select english from nouns_translations 
   where noun_nominative = $1::text`;
 
   return new Promise((resolve, reject) => {
