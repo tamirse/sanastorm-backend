@@ -103,7 +103,7 @@ const getVerbInflections = word => {
 };
 
 const getVerbEnglish = word => {
-  let query = `select verb_infinitive, english from verbs_translations 
+  let query = `select english from verbs_translations 
   where verb_infinitive = $1::text`;
 
   return new Promise((resolve, reject) => {
@@ -132,7 +132,7 @@ const getVerbData = word => {
         }
       })
       .then(res => {
-        wordData.english = res;
+        wordData.english = res; // handle getVerbEnglish(..) promise
         resolve(wordData);
       })
       .catch(e => reject(e));
