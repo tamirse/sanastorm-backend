@@ -65,7 +65,7 @@ const getNounData = word => {
       })
       .then(res => {
         if (res) {
-          wordData.english = res;
+          wordData.english = res.english;
         }
         resolve(wordData);
       })
@@ -140,7 +140,7 @@ const getVerbData = word => {
       })
       .then(res => {
         if (res) {
-          wordData.english = res; // handle getVerbEnglish(..) promise
+          wordData.english = res.english; // handle getVerbEnglish(..) promise
         }
         resolve(wordData);
       })
