@@ -104,12 +104,14 @@ const lineToObject = line => {
 const getWordData = word => {
   // TODO handle stdin!!!!!
 
-  let resultChild = child_process.execSync(`${cmd}${SCRIPT_PATH}`);
-  let stdinStream = resultChild.stdin;
+  let resultChild = child_process.spawnSync(`${cmd}${SCRIPT_PATH}`, {
+    input: word
+  });
+  // let stdinStream = resultChild.stdin;
 
-  stdinStream.write(word);
-  stdinStream.end();
-  return formatOutput(resultChild.toString());
+  // stdinStream.write(word);
+  // stdinStream.end();
+  return formatOutput(resultChild.stdout.toString());
 };
 
 module.exports = {
