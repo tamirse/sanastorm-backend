@@ -1,6 +1,6 @@
 var child_process = require("child_process");
 
-const SCRIPT_PATH = "../omorfi/src/bash/omorfi-disambiguate-text.bash";
+const SCRIPT_PATH = "../omorfi/src/bash/omorfi-disambiguate-text.sh";
 const DEV = true;
 
 let cmd = "";
@@ -104,12 +104,12 @@ const lineToObject = line => {
 const getWordData = word => {
   // TODO handle stdin!!!!!
 
-  let result = child_process.execSync(`${cmd}${SCRIPT_PATH}`);
-  let stdinStream = child_process.stdin;
+  let resultChild = child_process.execSync(`${cmd}${SCRIPT_PATH}`);
+  let stdinStream = resultChild.stdin;
 
   stdinStream.write(word);
   stdinStream.end();
-  return formatOutput(result.toString());
+  return formatOutput(resultChild.toString());
 };
 
 module.exports = {
