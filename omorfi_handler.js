@@ -1,12 +1,6 @@
 var child_process = require("child_process");
 
 const SCRIPT_PATH = "../omorfi/src/bash/omorfi-disambiguate-text.sh";
-const DEV = true;
-
-let cmd = "";
-if (DEV) {
-  cmd = "sh ";
-}
 
 /**
  * Maps the UPOS codes to a more readable string
@@ -16,6 +10,8 @@ const mapUposCodeToReadable = uposCode => {
   switch (uposCode) {
     case "VERB":
       return "Verb";
+    case "NOUN":
+      return "Noun";
     case "PROPN":
       return "Proper Noun";
     case "ADV":
@@ -47,7 +43,7 @@ const mapUposCodeToReadable = uposCode => {
  * @param {string} stdout
  */
 const formatOutput = stdout => {
-  let outputLines = stdout.split("\n").slice(3, -6); // split and remove redundant rows
+  let outputLines = stdout.split("\n").slice(0, -7); // split and remove redundant rows
   outputLines = outputLines.map(line => line.trim()); // remove edge whitespaces
 
   // TODO handle all lines, not only 1
@@ -102,15 +98,10 @@ const lineToObject = line => {
  * @param {string} word
  */
 const getWordData = word => {
-  // TODO handle stdin!!!!!
-
-  let resultChild = child_process.spawnSync(`${cmd}${SCRIPT_PATH}`, {
+  let resultChild = child_process.spawnSync(SCRIPT_PATH, {
     input: word
   });
-  // let stdinStream = resultChild.stdin;
 
-  // stdinStream.write(word);
-  // stdinStream.end();
   return formatOutput(resultChild.stdout.toString());
 };
 
