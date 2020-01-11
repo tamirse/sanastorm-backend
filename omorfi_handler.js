@@ -100,9 +100,15 @@ const lineToObject = line => {
  * @param {string} word
  */
 const getWordData = word => {
-  let resultChild = child_process.spawnSync(SCRIPT_PATH, {
-    input: word
-  });
+  let resultChild = null;
+
+  try {
+    resultChild = child_process.spawnSync(SCRIPT_PATH, {
+      input: word
+    });
+  } catch (error) {
+    console.log(error);
+  }
 
   return formatOutput(resultChild.stdout.toString());
 };

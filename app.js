@@ -18,7 +18,9 @@ app.get("/api/sana/:word", (req, res) => {
 
   db.getWordData(word)
     .then(wordData => {
-      wordData["omorfi"] = omorfiWordData;
+      if (omorfiWordData.word !== null) {
+        wordData["omorfi"] = omorfiWordData;
+      }
       res.send(wordData);
     })
     .catch(e => res.send(e));
