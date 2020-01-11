@@ -9,29 +9,31 @@ const SCRIPT_PATH = "../omorfi/src/bash/omorfi-disambiguate-text.sh";
 const mapUposCodeToReadable = uposCode => {
   switch (uposCode) {
     case "VERB":
-      return "Verb";
+      return "verb";
     case "NOUN":
-      return "Noun";
+      return "noun";
     case "PROPN":
-      return "Proper Noun";
+      return "proper noun";
     case "ADV":
-      return "Adverb";
+      return "adverb";
     case "ADP":
-      return "Adposition";
+      return "adposition";
     case "ADJ":
-      return "Adjective";
+      return "adjective";
     case "AUX":
-      return "Auxiliary Verb";
+      return "auxiliary verb";
     case "CONJ":
-      return "Coordinating Conjunction";
+      return "coordinating conjunction";
     case "DET":
-      return "Determiner";
+      return "determiner";
     case "SCONJ":
-      return "Subordinating Conjunction";
+      return "subordinating conjunction";
     case "PUNCT":
-      return "Punctuation";
+      return "punctuation";
     case "SYM":
-      return "Symbol";
+      return "symbol";
+    case "PRON":
+      return "pronoun";
     default:
       break;
   }
