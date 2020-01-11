@@ -72,7 +72,9 @@ const lineToObject = line => {
 
     if (value === undefined) {
       // TODO handle case where word has # inside
-      lineObject["word"] = key; // value is undefined when key is the word itself
+
+      // value is undefined when key is the word itself
+      lineObject["word"] = key.substring(1, key.length - 1); // remove double quotes
     } else if (key === "UPOS") {
       lineObject[key] = mapUposCodeToReadable(value);
     } else {
