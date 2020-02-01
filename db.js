@@ -41,7 +41,10 @@ const getNounEnglish = word => {
   return new Promise((resolve, reject) => {
     pool
       .query(query, [word])
-      .then(result => resolve(result.rows))
+      .then(result => {
+        console.log(result.rows);
+        resolve(result.rows);
+      })
       .catch(e => reject(e));
   });
 };
