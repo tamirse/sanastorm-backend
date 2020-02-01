@@ -12,12 +12,12 @@ const pool = new Pool({
 const getNounInflections = word => {
   let query = `select nominative,genitive,partitive,
   inessive,elative,illative,adessive,ablative,allative,
-  essive,translative,abessive,comitative, 
+  essive,translative,abessive,comitative,
   pl_nominative,pl_genitive,pl_partitive,pl_inessive,
   pl_elative,pl_illative,pl_adessive,pl_ablative,
   pl_allative,pl_essive,pl_translative,pl_instructive,
-  pl_abessive 
-  from nouns 
+  pl_abessive
+  from nouns
   where $1::text in (nominative,genitive,partitive,
   inessive,elative,illative,adessive,ablative,allative,
   essive,translative,abessive,comitative,
@@ -35,13 +35,13 @@ const getNounInflections = word => {
 };
 
 const getNounEnglish = word => {
-  let query = `select english from nouns_translations 
+  let query = `select english from nouns_translations
   where noun_nominative = $1::text`;
 
   return new Promise((resolve, reject) => {
     pool
       .query(query, [word])
-      .then(result => resolve(result.rows[0]))
+      .then(result => resolve(result.rows))
       .catch(e => reject(e));
   });
 };
@@ -74,7 +74,7 @@ const getNounData = word => {
 };
 
 const getVerbInflections = word => {
-  let query = `select * from verbs 
+  let query = `select * from verbs
   where $1::text in (
     pres_1sg, pres_2sg, pres_3sg,
     pres_1pl, pres_2pl, pres_3pl,
@@ -110,7 +110,7 @@ const getVerbInflections = word => {
 };
 
 const getVerbEnglish = word => {
-  let query = `select english from verbs_translations 
+  let query = `select english from verbs_translations
   where verb_infinitive = $1::text`;
 
   return new Promise((resolve, reject) => {
