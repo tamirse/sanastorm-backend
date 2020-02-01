@@ -35,12 +35,15 @@ const getNounInflections = word => {
 };
 
 const getNounEnglish = word => {
-  let query = `select english from nouns_translations
-  where noun_nominative = $1::text`;
+  let query = {
+    text: `select english from nouns_translations where noun_nominative = $1::text`,
+    values: [word],
+    rowMode: "array"
+  };
 
   return new Promise((resolve, reject) => {
     pool
-      .query(query, [word])
+      .query(query)
       .then(result => {
         console.log(result.rows);
         resolve(result.rows);
