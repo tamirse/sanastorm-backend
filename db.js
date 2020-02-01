@@ -71,7 +71,7 @@ const getNounData = word => {
       })
       .then(res => {
         if (res) {
-          wordData.english = res.english;
+          wordData.english = res;
         }
         resolve(wordData);
       })
