@@ -116,13 +116,16 @@ const getVerbInflections = word => {
 };
 
 const getVerbEnglish = word => {
-  let query = `select english from verbs_translations
-  where verb_infinitive = $1::text`;
+  let query = {
+    text: `select english from verbs_translations where verb_infinitive = $1::text`,
+    values: [word],
+    rowMode: "array"
+  };
 
   return new Promise((resolve, reject) => {
     pool
-      .query(query, [word])
-      .then(result => resolve(result.rows[0]))
+      .query(query)
+      .then(result => resolve(result.rows.map(e => e[0])))
       .catch(e => reject(e));
   });
 };
@@ -146,7 +149,7 @@ const getVerbData = word => {
       })
       .then(res => {
         if (res) {
-          wordData.english = res.english; // handle getVerbEnglish(..) promise
+          wordData.english = res; // handle getVerbEnglish(..) promise
         }
         resolve(wordData);
       })
