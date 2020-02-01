@@ -45,8 +45,8 @@ const getNounEnglish = word => {
     pool
       .query(query)
       .then(result => {
-        console.log(result.rows);
-        resolve(result.rows);
+        console.log(result.rows.map(e => e[0]));
+        resolve(result.rows.map(e => e[0])); // return array of strings instead of array of arrays
       })
       .catch(e => reject(e));
   });
@@ -159,9 +159,6 @@ const getWordData = word => {
     const nounPromise = getNounData(word);
     const verbPromise = getVerbData(word);
 
-    const nounPromiseLower = getNounData(word.toLowerCase());
-    const verbPromiseLower = getVerbData(word.toLowerCase());
-
     Promise.all([nounPromise, verbPromise])
       .then(([nounData, verbData]) => {
         if (nounData) {
@@ -170,6 +167,9 @@ const getWordData = word => {
           resolve(verbData);
         } else {
           // try again with lower case
+          const nounPromiseLower = getNounData(word.toLowerCase());
+          const verbPromiseLower = getVerbData(word.toLowerCase());
+
           Promise.all([nounPromiseLower, verbPromiseLower]).then(
             ([nounData, verbData]) => {
               if (nounData) {
