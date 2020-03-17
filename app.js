@@ -16,6 +16,9 @@ app.get("/api/sana/:word", (req, res) => {
     word = omorfiWordData.word;
   }
 
+  // add CORS (cross-origin resource sharing) header
+  res.headers.set("Access-Control-Allow-Origin", "*");
+
   db.getWordData(word)
     .then(wordData => {
       if (omorfiWordData.word !== null) {
