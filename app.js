@@ -17,7 +17,10 @@ app.get("/api/sana/:word", (req, res) => {
   }
 
   // add CORS (cross-origin resource sharing) header
-  res.headers.set("Access-Control-Allow-Origin", "*");
+  const corsHeader = new Headers({
+    "Access-Control-Allow-Origin": "*"
+  });
+  res.headers = corsHeader;
 
   db.getWordData(word)
     .then(wordData => {
